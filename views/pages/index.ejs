@@ -1,0 +1,22 @@
+<%- include('../components/layout') %>
+<div class="container">
+  <div class="row">
+    <% if(movies.length > 0) { %>
+      <% movies.forEach((item) => { %>
+        <div class="col-md-2">
+          <div class="thumbnail">
+            <a href="/movie/<%= item._id %>">
+              <img src="<%= item.poster %>" alt="<%= item.title %>">
+            </a>
+            <div class="caption">
+              <h3><%= item.title %></h3>
+              <a href="/movie/<%= item._id %>" role='button' class='btn btn-primary'>观看预告片</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <h3>空空如也，赶紧去后台新添点吧！</h3>
+    <% } %>
+  </div>
+</div>
