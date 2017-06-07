@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views/pages'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
 
 /* GET users listing. */
 app.get('/user', function(req, res, next) {
