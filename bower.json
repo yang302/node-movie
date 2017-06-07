@@ -1,0 +1,25 @@
+{
+    "name": "movie",
+    "description": "movie",
+    "main": "",
+    "authors": [
+        "yangqingfeng <724370019@qq.com>"
+    ],
+    "license": "MIT",
+    "keywords": [
+        "movie"
+    ],
+    "homepage": "https://github.com/yang302/node-movie",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "public/libs",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootstrap": "^3.3.7"
+    }
+}
