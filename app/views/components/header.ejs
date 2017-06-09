@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1><%= title %></h1>
+            <small>重度科幻迷</small>
+        </div>
+    </div>
+</div>
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">重度科幻迷</a>
+        </div>
+        <% if (user) { %>
+            <p class="navbar-text navbar-right">
+                <span>欢迎您，<%= user.name %></span>
+                <span>&nbsp;|&nbsp;</span>
+                <a href="/logout" class='navbar-link' >登出</a>
+            </p>
+        <% } else { %>
+            <p class="navbar-text navbar-right">
+                <a href="/signup" class='navbar-link'>注册</a>
+                <span>&nbsp;|&nbsp;</span>
+                <a href="signin" class='navbar-link'>登录</a>
+            </p>
+        <% } %>
+    </div>
+</div>
+
+

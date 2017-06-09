@@ -1,0 +1,17 @@
+<%- include('../components/layout') %>
+<div class="container">
+  <div class="row">
+    <form action='/admin/category' class='form-horizontal' method='post'>
+      <div class="form-group">
+        <label for="inputcategory" class='col-sm-2 control-label'>电影分类</label>
+        <div class='col-sm-10'>
+          <input type="text" id='inputcategory' class='form-control' name='category[name]' value='<%= category.name %>'>
+        </div>
+      </div>
+
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class='btn btn-primary'>录入</button>
+      </div>
+    </form>
+  </div>
+</div>

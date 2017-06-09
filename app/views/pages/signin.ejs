@@ -1,0 +1,115 @@
+<%- include('../components/layout') %>
+<style>
+    form {
+        padding-top: 40px;
+    }
+
+    .m15 {
+        margin: 15PX;
+    }
+    
+    .tc {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    @media screen and (min-width:768px) {
+        form {
+            width: 400px !important;
+            margin: 0 auto !important;
+        }
+    }
+</style>
+ <div class="container">
+        <form class="form-horizontal" role="form" method="post" onsubmit="return false">
+        <%- message %>
+            <fieldset>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="tc">请先登录</p>
+                    </div>
+                    <div class="panel-body m15">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                <input type="text" class="form-control" id='username' name='user[name]' placeholder="请输入用户名" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                                <input type="password" class="form-control" id="password" name='user[password]' placeholder="请输入密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-block" id="login0">登录</button>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-info col-sm-2 col-sm-offset-10" id="register0">注册</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+       <script>
+        $(function() {
+            const username = $('#username').val();
+            const password = $('#password').val();
+
+            //初始禁用登录按钮
+            if(username == '' || password == '') {
+                $('#login0').attr('disabled', true);
+            }
+            
+            //都不为空时可登录
+            $('input').blur(function(){
+                const username = $('#username').val();
+                const password = $('#password').val();
+                
+                if(username == '' || password == '') {
+                    $('#login0').attr('disabled', true);
+                }else{
+                    $('#login0').attr('disabled', false);
+                }
+            });
+
+            $('#register0').click(function() {
+                location.href = '/signup';
+            });
+
+            $('#login0').click(function() {
+                const username = $('#username').val();
+                const password = $('#password').val();
+                const data = {
+                    'uname': username,
+                    'upassword': password
+                };
+                $.ajax({
+                    url: '/user/signin',
+                    type: 'post',
+                    data: data,
+                    success: function(data, status) {
+                        if (status == 'success') {
+                            location.href = '/';
+                        }
+                    },
+                    error: function(data, status) {
+                        if (status == 'error') {
+                            location.href = '/signin';
+                        }
+                    }
+                });
+            });
+        });
+    </script>

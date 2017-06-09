@@ -1,0 +1,27 @@
+<%- include('../components/layout') %>
+<div class="container">
+  <div class="row">
+    <table class='table table-bordered table-hover center'>
+      <thead>
+        <tr>
+          <th>名字</th>
+          <th>时间</th>
+          <th>查看</th>
+          <th>修改</th>
+          <th>删除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% categories.forEach((item) => { %>
+          <tr class='item-id-<%= item._id %>'>
+            <td><%= item.name %></td>
+            <td><%= moment(item.meta.updateAt).format('MM/DD/YYYY')%></td>
+            <td><a href="/movie/<%= item._id %>" target='_blank'>查看</a></td>
+            <td><a href="/admin/movie/update/<%= item._id %>">修改</a></td>
+            <td><button type="button" class='btn btn-danger delMovie' data-id='<%= item._id %>'>删除</button></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

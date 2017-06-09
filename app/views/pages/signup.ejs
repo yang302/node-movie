@@ -1,0 +1,131 @@
+<%- include('../components/layout') %>
+
+<style>
+    form {
+        padding-top: 40px;
+    }
+    
+    .m15 {
+        margin: 15px;
+    }
+    
+    .tc {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    @media screen and (min-width:768px) {
+        form {
+            width: 400px !important;
+            margin: 0 auto !important;
+        }
+    }
+</style>
+<div class="container">
+        <form class="form-horizontal" role="form" method="post" onsubmit="return false">
+            <%- message %>
+            <fieldset>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p class="tc">注册信息</p>
+                    </div>
+                    <div class="panel-body m15">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                <input type="text" class="form-control" id='username' name="user[name]" placeholder="请输入用户名" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                                <input type="password" class="form-control" id="password" name="user[password]" placeholder="请输入密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="请再次输入密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-block" id="register1">注册</button>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-info col-sm-2 col-sm-offset-10" id="login1">登录</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+     <script>
+        $(function() {
+            const username = $('#username').val();
+            const password = $('#password').val();
+            const password1 = $('#password1').val();
+
+            //初始禁用注册按钮
+            if(username == '' || password == '' || password1 == '') {
+                $('#register1').attr('disabled', true);
+            }
+            
+            //都不为空时可注册
+            $('input').blur(function(){
+                const username = $('#username').val();
+                const password = $('#password').val();
+                const password1 = $('#password1').val();
+                
+                if(username == '' || password == '' || password1 == '') {
+                    $('#register1').attr('disabled', true);
+                }else{
+                    $('#register1').attr('disabled', false);
+                }
+            });
+
+            $('#login1').click(function() {
+                location.href = '/signin';
+            });
+
+            $('#register1').click(function() {
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var password1 = $('#password1').val();
+                if (password !== password1) {
+                    $('#password').css('border', '1px solid red');
+                    $('#password1').css('border', '1px solid red');
+                } else if (password === password1) {
+                    var data = {
+                        'uname': username,
+                        'upassword': password
+                    };
+                    $.ajax({
+                        url: '/user/signup',
+                        type: 'post',
+                        data: data,
+                        success: function(data, status) {
+                            if (status == 'success') {
+                                location.href = '/signin';
+                            }
+                        },
+                        error: function(data, err) {
+                            location.href = '/signup';
+                        }
+                    });
+                }
+            });
+        })
+    </script>

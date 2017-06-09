@@ -1,0 +1,97 @@
+<%- include('../components/layout') %>
+
+<style>
+  .commentsWrapper {
+    margin-top: 20px;
+    margin-bottom: 60px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <embed src="<%= movie.flash %>" allowFullScreen='true' quality='high' width='720' height='600' align='middle' type='application/x-shockwave-flash'>
+      <div class="panel panel-default commentsWrapper">
+        <div class="panel-heading">
+          <h3>评论区</h3>
+        </div>
+        <div class="panel-body">
+          <ul class="media-list">
+            <% comments.forEach((item, index) =>{ %>
+              <li class="media">
+                <div class="media-left">
+                  <a class='comment' href="#comments" data-cid='<%= item._id %>' data-tid='<%= item.from._id %>'>
+                    <img class='media-object' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497509765&di=d98aaa0495030dfcabae9041f15b8aec&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fwh%3D450%2C600%2Fsign%3D96598c1956da81cb4eb38bc96756fc20%2Fae51f3deb48f8c54afd9a1c23d292df5e1fe7fd0.jpg" width='60' height='60'>
+                  </a>
+                </div>
+                <div class="media-body">
+                  <h4 class='media-heading'><%= item.from.name %></h4>
+                  <p><%= item.content %></p>
+                  <br />
+                 
+                  <% if(item.reply && item.reply.length > 0){ %>
+                    <% item.reply.forEach((reply, index) => { %>
+                      <div class="media">
+                        <div class="media-left">
+                          <a class='comment' href="#comments" data-cid='<%= item._id %>' data-tid='<%= reply.from._id %>'>
+                            <img class='media-object' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497509765&di=d98aaa0495030dfcabae9041f15b8aec&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fwh%3D450%2C600%2Fsign%3D96598c1956da81cb4eb38bc96756fc20%2Fae51f3deb48f8c54afd9a1c23d292df5e1fe7fd0.jpg" width='60' height='60'>
+                          </a>
+                        </div>
+                        <div class="media-body">
+                          <h4 class='media-heading'>
+                            <%= reply.from.name %>
+                            <span class="text-info">回复</span>
+                            <%= reply.to.name %>
+                          </h4>
+                          <p><%= reply.content %></p>
+                          <br />
+                        </div>
+                      </div>
+                    <% }) %>
+                  <% } %>
+                </div>
+                <hr />
+              </li>
+            <% }) %>
+          </ul>
+
+          <div id="comments">
+            <form action="/user/comment" method='POST' id="commentForm">
+              <input type="hidden" name="comment[movie]" value="<%= movie._id %>">    
+
+              <% if(user) { %>    
+                <input type="hidden" name='comment[from]' value='<%= user._id %>'>
+              <% } %>
+             <div class="form-group">
+                <textarea class='form-control' name='comment[content]' rows="3"></textarea>
+              </div>
+              
+              <% if(user) { %>
+                <button type="submit" class='btn btn-primary'>提交</button>
+              <% }else{ %>
+                  <a href="/signin" class='navbar-link'>登录后评论</a>
+              <% } %>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <dl class="dl-horizontal">
+        <dt>电影名字</dt>
+        <dd><%= movie.title %></dd>
+        <dt>导演</dt>
+        <dd><%= movie.doctor %></dd>
+        <dt>国家</dt>
+        <dd><%= movie.country %></dd>
+        <dt>语言</dt>
+        <dd><%= movie.language %></dd>
+        <dt>上映年份</dt>
+        <dd><%= movie.year %></dd>
+        <dt>简介</dt>
+        <dd><%= movie.summary %></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<script src="/js/detail.js"></script>

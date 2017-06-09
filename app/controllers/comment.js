@@ -1,0 +1,34 @@
+const Comment = require('../models/comment');
+
+// comment
+exports.save = (req, res) =>  {
+    const _comment = req.body.comment; 
+    const movieId = _comment.movie;
+
+    if(_comment.cid) {
+        Comment.findById(_comment.cid, (err, comment) => {
+            const reply = {
+                from: _comment.from,
+                to: _comment.tid,
+                content: _comment.content
+            };
+
+            comment.reply.push(reply);
+
+            comment.save(function(err, comment) {
+                if (err) {
+                    console.log(err); 
+                }
+                res.redirect('/movie/' + movieId); 
+            });
+        });
+    }else{
+        var comment = new Comment(_comment); 
+        comment.save(function(err, comment) {
+            if (err) {
+                console.log(err); 
+            }
+            res.redirect('/movie/' + movieId); 
+        }); 
+    }
+}; 
